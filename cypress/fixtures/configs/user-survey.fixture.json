@@ -1,0 +1,20 @@
+{
+  "fields": [
+    {
+      "selector": "body form > fieldset input[formcontrolname='age']",
+      "valuePointer": "age",
+      "elementType": "input"
+    },
+    {
+      "selector": "body form > fieldset select[formcontrolname='gender']",
+      "valuePointer": "gender",
+      "elementType": "select"
+    }
+  ],
+  "actions": {
+    "submit": {
+      "selector": "body form > footer > button.submit",
+      "eventType": "click"
+    }
+  }
+}

@@ -62,20 +62,32 @@ Cypress.Commands.add('fillForm', (configPath, dataPath) => {
     });
 });
 
+Cypress.Commands.add('executeAssertion', (configPath, assertionName) => {
+  cy
+    .fixture(configPath)
+    .then(({ assertions }) => {
+      const { sequence, timing } = assertions[assertionName];
+      const toEval = sequence
+        .map(({ method, property, arguments: args }, i) => method ? `.${method}(...sequence[${i}].arguments)` : `.${property}`)
+        .reduce((chain, link) => chain.concat(link), 'cy');
+      eval(toEval);
+    });
+});
+
 Cypress.Commands.add('triggerAction', (configPath, actionKey) => {
-    cy
-      .fixture(configPath)
-      .as('config');
-    cy
-      .get('@config')
-      .then(({ actions }) => {
-        const { selector, eventType } = actions[actionKey];
-        switch (eventType) {
-          case 'click':
-            cy
-              .get(selector)
-              .click();
-            break;
-        }
-      })
+  cy
+    .fixture(configPath)
+    .as('config');
+  cy
+    .get('@config')
+    .then(({ actions }) => {
+      const { selector, eventType } = actions[actionKey];
+      switch (eventType) {
+        case 'click':
+          cy
+            .get(selector)
+            .click();
+          break;
+      }
+    })
 });

@@ -74,12 +74,28 @@ Cypress.Commands.add('executeAssertion', (configPath, assertionName) => {
     });
 });
 
+Cypress.Commands.add('executeAssertions', (configPath, assertionNames) => {
+  assertionNames.forEach((assertionName) => cy.executeAssertion(configPath, assertionName));
+});
+
+Cypress.Commands.add('setupRoutes', (configPath) => {
+  cy
+    .fixture(configPath)
+    .then(({ routes }) => {
+      if (routes && routes.length) {
+        cy.server();
+        routes.forEach(({ alias, options }) => {
+          cy
+            .route(options)
+            .as(alias);
+        });
+      }
+    });
+});
+
 Cypress.Commands.add('triggerAction', (configPath, actionKey) => {
   cy
     .fixture(configPath)
-    .as('config');
-  cy
-    .get('@config')
     .then(({ actions }) => {
       const { selector, eventType } = actions[actionKey];
       switch (eventType) {

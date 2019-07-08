@@ -1,12 +1,29 @@
-describe('User Survey (SUCCESS)', () => {
-  it('Submit new user information', () => {
+const configPath = '/user-survey/user-survey.config.json';
+
+context('User Survey', () => {
+  before(() => {
     cy.visit('http://localhost:3000');
-    cy.url().should('include', 'localhost');
-    cy.fillForm(
-        'configs/user-survey.fixture.json',
-        'data/user-survey/male28.fixture.json'
-    );
-    cy.triggerAction('configs/user-survey.fixture.json', 'submit');
-    cy.executeAssertion('configs/user-survey.fixture.json', 'state_change_success');
+    cy.setupRoutes(configPath);
+  });
+
+  describe('Success Cases', () => {
+    it('User submits valid form.', () => {
+      cy
+        .fixture(configPath)
+        .then((config => {
+          cy.fillForm(
+            configPath,
+            'user-survey/male28.fixture.json'
+          );
+          cy.triggerAction(configPath, 'submit');
+          cy
+            .wait(['@postSurvey'])
+            .then(({ request, response }) => {
+              cy.log(request.body);
+              cy.log(response.body);
+            });
+          cy.executeAssertions(configPath, config.assertionSuites.success);
+        }));
+    });
   });
 });

@@ -1,0 +1,71 @@
+{
+  "actions": {
+    "submit": {
+      "selector": "body form > footer > button.submit",
+      "eventType": "click"
+    }
+  },
+  "assertions": {
+    "formChangeAge": {
+      "sequence": [
+        {
+          "method": "get",
+          "arguments": [
+            "input[formcontrolname='age']"
+          ]
+        },
+        {
+          "method": "should",
+          "arguments": [
+            "have.value",
+            "28"
+          ]
+        }
+      ]
+    },
+    "formChangeGender": {
+      "sequence": [
+        {
+          "method": "get",
+          "arguments": [
+            "select[formcontrolname='gender']"
+          ]
+        },
+        {
+          "method": "should",
+          "arguments": [
+            "have.value",
+            "male"
+          ]
+        }
+      ]
+    }
+  },
+  "assertionSuites": {
+    "success": [
+      "formChangeAge",
+      "formChangeGender"
+    ]
+  },
+  "fields": [
+    {
+      "selector": "body form > fieldset input[formcontrolname='age']",
+      "valuePointer": "age",
+      "elementType": "input"
+    },
+    {
+      "selector": "body form > fieldset select[formcontrolname='gender']",
+      "valuePointer": "gender",
+      "elementType": "select"
+    }
+  ],
+  "routes": [
+    {
+      "alias": "postSurvey",
+      "options": {
+        "method": "POST",
+        "url": "/users"
+      }
+    }
+  ]
+}

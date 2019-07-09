@@ -21,7 +21,7 @@ context('User Survey', () => {
       // cy
       //   .get('@config')
       //   .then(({ assertionSuites }) => cy.executeAssertion(configPath, 'formFillGender'));
-      cy.executeAssertion(configPath, 'formFillGender')
+      // cy.executeAssertion(configPath, 'formFillGender')
       cy.triggerAction(configPath, 'submit');
       cy.executeAssertion(configPath, 'responseCodeSuccess');
     });

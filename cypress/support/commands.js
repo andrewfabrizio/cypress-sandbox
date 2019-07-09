@@ -66,11 +66,8 @@ Cypress.Commands.add('executeAssertion', (configPath, assertionName) => {
   cy
     .fixture(configPath)
     .then(({ assertions }) => {
-      const sequence = assertions[assertionName];
-      const toEval = sequence
-        .map(({ method, property, arguments: args }, i) => method ? `.${method}(...sequence[${i}].arguments)` : `.${property}`)
-        .reduce((chain, link) => chain.concat(link), 'cy');
-      eval(toEval);
+      assertions[assertionName]
+        .reduce((chain, { method, arguments: args }) => chain[method](...args), cy);
     });
 });
 

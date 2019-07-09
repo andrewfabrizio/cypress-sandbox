@@ -65,7 +65,7 @@
       {
         "method": "should",
         "arguments": [
-          "be",
+          "be.eq",
           201
         ]
       }

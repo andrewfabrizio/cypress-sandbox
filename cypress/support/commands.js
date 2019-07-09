@@ -66,7 +66,7 @@ Cypress.Commands.add('executeAssertion', (configPath, assertionName) => {
   cy
     .fixture(configPath)
     .then(({ assertions }) => {
-      const { sequence, timing } = assertions[assertionName];
+      const sequence = assertions[assertionName];
       const toEval = sequence
         .map(({ method, property, arguments: args }, i) => method ? `.${method}(...sequence[${i}].arguments)` : `.${property}`)
         .reduce((chain, link) => chain.concat(link), 'cy');
@@ -104,6 +104,8 @@ Cypress.Commands.add('triggerAction', (configPath, actionKey) => {
             .get(selector)
             .click();
           break;
+        default:
+          throw new Error(`Unknown eventType "${eventType}" encountered associated with the "${actionKey}" action.`)
       }
     })
 });

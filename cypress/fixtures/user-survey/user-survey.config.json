@@ -6,45 +6,96 @@
     }
   },
   "assertions": {
-    "formChangeAge": {
-      "sequence": [
-        {
-          "method": "get",
-          "arguments": [
-            "input[formcontrolname='age']"
-          ]
-        },
-        {
-          "method": "should",
-          "arguments": [
-            "have.value",
-            "28"
-          ]
-        }
-      ]
-    },
-    "formChangeGender": {
-      "sequence": [
-        {
-          "method": "get",
-          "arguments": [
-            "select[formcontrolname='gender']"
-          ]
-        },
-        {
-          "method": "should",
-          "arguments": [
-            "have.value",
-            "male"
-          ]
-        }
-      ]
-    }
+    "formFillAge": [
+      {
+        "method": "get",
+        "arguments": [
+          "input[formcontrolname='age']"
+        ]
+      },
+      {
+        "method": "its",
+        "arguments": [
+          "value"
+        ]
+      },
+      {
+        "method": "should",
+        "arguments": [
+          "be.gte",
+          0
+        ]
+      }
+    ],
+    "formFillGender": [
+      {
+        "method": "get",
+        "arguments": [
+          "select[formcontrolname='gender']"
+        ]
+      },
+      {
+        "method": "should",
+        "arguments": [
+          "have.value",
+          "male"
+        ]
+      },
+      {
+        "method": "or",
+        "arguments": [
+          "have.value",
+          "female"
+        ]
+      }
+    ],
+    "responseCodeSuccess": [
+      {
+        "method": "wait",
+        "arguments": [
+          "@postSurvey"
+        ]
+      },
+      {
+        "method": "its",
+        "arguments": [
+          "status"
+        ]
+      },
+      {
+        "method": "should",
+        "arguments": [
+          "be",
+          201
+        ]
+      }
+    ],
+    "responseCodeError": [
+      {
+        "method": "wait",
+        "arguments": [
+          "@postSurvey"
+        ]
+      },
+      {
+        "method": "its",
+        "arguments": [
+          "status"
+        ]
+      },
+      {
+        "method": "should",
+        "arguments": [
+          "be.gte",
+          400
+        ]
+      }
+    ]
   },
   "assertionSuites": {
     "success": [
-      "formChangeAge",
-      "formChangeGender"
+      "formFillAge",
+      "formFillGender"
     ]
   },
   "fields": [
@@ -64,7 +115,7 @@
       "alias": "postSurvey",
       "options": {
         "method": "POST",
-        "url": "/users"
+        "url": "/survey"
       }
     }
   ]

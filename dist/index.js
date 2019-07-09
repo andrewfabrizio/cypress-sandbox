@@ -22,10 +22,10 @@ function triggerNetworkRequest(method = 'GET', path, payload) {
 
 function submit() {
   const payload = {
-      age: document.querySelector('input[formcontrolname="age"]').value,
+      age: Number(document.querySelector('input[formcontrolname="age"]').value),
       gender: document.querySelector('select[formcontrolname="gender"]').value,
   };
-  triggerNetworkRequest('POST', '/users', payload);
+  triggerNetworkRequest('POST', '/survey', payload);
 }
 
 initialize();

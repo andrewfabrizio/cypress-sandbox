@@ -16,5 +16,16 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+before(() => {
+  const baseUrlOverride = Cypress.env('baseUrl');
+  const apiUrlOverride = Cypress.env('apiUrl');
+  if (baseUrlOverride) {
+    Cypress.config('baseUrl', baseUrlOverride);
+  }
+  if (apiUrlOverride) {
+    Cypress.env('apiUrl', apiUrlOverride);
+  }
+});
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

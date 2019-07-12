@@ -1,1 +1,7 @@
-{}
+{
+  "projectId": "com.bric.cs.web.cypress",
+  "baseUrl": "http://localhost:4200",
+  "env": {
+    "apiUrl": "http://localhost:8805"
+  }
+}

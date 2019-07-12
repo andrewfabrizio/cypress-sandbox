@@ -82,6 +82,10 @@ Cypress.Commands.add('setupRoutes', (configPath) => {
       if (routes && routes.length) {
         cy.server();
         routes.forEach(({ alias, options }) => {
+          // TODO: use RegExp to test options.url to see if it needs modification
+          options.url = Cypress
+            .env('apiUrl')
+            .concat(options.url);
           cy
             .route(options)
             .as(alias);
